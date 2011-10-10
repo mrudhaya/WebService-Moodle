@@ -25,7 +25,7 @@
  */
 
 require_once("$CFG->libdir/externallib.php");
-require_once("../externalbaselib.php");
+require_once("$CFG->libdir/../SistemaAula/externalbaselib.php");
 
 class sistemaaula_user_external extends external_api {
 
