@@ -78,14 +78,14 @@ class sistemaaula_grade_external extends external_api {
 		// diretamente sem que sejam algum tipo de estrutura. Isto facilita
 		// o acesso aos parametros,
 		$params = self::validate_parameters(
-		self::get_final_grade_by_user_id_teste_parameters(), // função de validação
-		array('userid'=>$userid,'courseid'=>$courseid) // array com os parametros
+		self::get_final_grade_by_user_id_and_course_id_parameters(), // função de validação
+		array('userid'=>$userid, 'courseid'=>$courseid) // array com os parametros
 		);
 
 		// OK, agora que está tudo ok, consulto no banco de dados a nota
 		// do usuário conforme o curso
 			
-		$grades = grade_get_course_grade($userid,$courseid);
+		$grades = grade_get_course_grade($params['userid'],$params['courseid']);
 		/*
 		 * $grades é um array de grade no formato:
 		*
@@ -108,15 +108,19 @@ class sistemaaula_grade_external extends external_api {
 		* $item->hidden
 		*
 		*/
-			
-		if($grades === false)return -9999;
-		if($grades === null) return -8888;
+		$result = array();
+		if($grades === false)
+			$result['grade'] = -9999;
+		else if($grades === null) 
+			$result['grade'] = -8888;
 		// como informei apenas um curso nos parametros retorna apenas um grade, não retorna array.
-		if(empty($grades->grade))return -1;
+		else if(!isset($grades->grade))
+			$result['grade'] = -1;
+		else{
+			$result['grade'] = $grades->grade;
+		}
 
-		return $grades->grade;
-		return 0;
-
+		return $result;
 	}
 
 
@@ -125,7 +129,11 @@ class sistemaaula_grade_external extends external_api {
 	 * @return external_description
 	 */
 	public static function get_final_grade_by_user_id_and_course_id_returns() {
-		return new external_value(PARAM_FLOAT,"A nota final do usuário" );
+		return new external_single_structure(
+		array(
+                    'grade' => new external_value(PARAM_FLOAT,"A nota final do usuário" )
+		), 'Grade com detalhes da avaliação do usuário.'
+		);
 	}
 
 }
