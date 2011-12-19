@@ -14,7 +14,7 @@ $functions = array(
 $services = array(
     'servicename' => array(
         'functions' => array ('sistemaaula_grade_get_final_grade_by_user_id_and_course_id'), //web service function name
-        'requiredcapability' => 'moodle/grade:export, gradeexport/txt:view',                  
+        'requiredcapability' => '',                  
         'restrictedusers' => 1,
         'enabled'=>0, //used only when installing the services
 )
