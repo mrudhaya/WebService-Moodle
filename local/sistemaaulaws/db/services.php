@@ -12,7 +12,7 @@ $functions = array(
 );
 
 $services = array(
-    'servicename' => array(
+    'Sistema Aula' => array(
         'functions' => array ('sistemaaula_grade_get_final_grade_by_user_id_and_course_id'), //web service function name
         'requiredcapability' => '',                  
         'restrictedusers' => 1,
