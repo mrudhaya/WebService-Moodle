@@ -84,7 +84,7 @@ class sistemaaula_grade_external extends external_api {
 
 		// OK, agora que está tudo ok, consulto no banco de dados a nota
 		// do usuário conforme o curso
-			
+
 		$grades = grade_get_course_grade($params['userid'],$params['courseid']);
 		/*
 		 * $grades é um array de grade no formato:
