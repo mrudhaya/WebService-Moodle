@@ -25,7 +25,6 @@
  */
 
 require_once("$CFG->libdir/externallib.php");
-require_once("$CFG->libdir/../SistemaAula/externalbaselib.php");
 
 class sistemaaula_user_external extends external_api {
 
@@ -111,17 +110,17 @@ class sistemaaula_user_external extends external_api {
         foreach ($params['users'] as $user) {
             // Make sure that the username doesn't already exist
             if ($DB->record_exists('user', array('username'=>$user['username'], 'mnethostid'=>$CFG->mnet_localhost_id))) {
-                throw new SistemaAulaMoodleException('username_already_exists',$user['username']);
+                throw new moodle_exception('username_already_exists', 'sistemaaula', '', $user['username']);
             }
 
             // Make sure auth is valid
             if (empty($availableauths[$user['auth']])) {
-                throw new invalid_parameter_exception('Invalid authentication type: '.$user['auth']);
+                throw new moodle_exception('invalid_authentication_type', 'sistemaaula', '', $user['auth']);
             }
 
             // Make sure lang is valid
             if (empty($availablelangs[$user['lang']])) {
-                throw new invalid_parameter_exception('Invalid language code: '.$user['lang']);
+                throw new moodle_exception('invalid_language_code', 'sistemaaula', '', $user['lang']);
             }
 
             // Make sure lang is valid
@@ -129,14 +128,14 @@ class sistemaaula_user_external extends external_api {
                                                                                      // so no default value.
                                                                                      // We need to test if the client sent it
                                                                                      // => !empty($user['theme'])
-                throw new invalid_parameter_exception('Invalid theme: '.$user['theme']);
+                throw new moodle_exception('invalid_theme', 'sistemaaula', '', $user['theme']);
             }
 
             // make sure there is no data loss during truncation
             $truncated = truncate_userinfo($user);
             foreach ($truncated as $key=>$value) {
                     if ($truncated[$key] !== $user[$key]) {
-                        throw new invalid_parameter_exception('Property: '.$key.' is too long: '.$user[$key]);
+                        throw new moodle_exception('property_'.$key.'_is_too_long', 'sistemaaula', '', $user[$key]);
                     }
             }
 

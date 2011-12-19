@@ -1,10 +1,14 @@
 <?
+
+
+require_once("$CFG->libdir/externallib.php");
+
 /**
  * 
  * @author extracbd
  *
  */
-class SystemaAulaMoodleException extends Exception{
+class SistemaAulaMoodleException extends Exception{
 
 	public $errorcode;
 	public $module;
@@ -12,7 +16,7 @@ class SystemaAulaMoodleException extends Exception{
 	public $link;
 	public $debuginfo;
 
-	function __construct($errorcode, $a=NULL,$debuginfo=NULL) {
+	public function __construct($errorcode, $a=NULL, $debuginfo=NULL) {
 		$this->module    = 'SistemaAula';
 		$this->link      = 'http://www.sistemaaula.com.br/moodle';
 
