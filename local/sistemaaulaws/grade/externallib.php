@@ -25,6 +25,7 @@
  */
 
 require_once("$CFG->libdir/externallib.php");
+require("returnlib.php");
 
 class sistemaaula_grade_external extends external_api {
 
@@ -58,8 +59,8 @@ class sistemaaula_grade_external extends external_api {
 		// obtemos os acessores diretamente via variaveis globais
 		global $CFG;
 
-		require_once $CFG->dirroot.'/grade/lib.php';
-		require_once $CFG->dirroot.'/grade/querylib.php';
+		require_once($CFG->dirroot.'/grade/lib.php');
+		require_once($CFG->dirroot.'/grade/querylib.php');
 		require_once($CFG->dirroot . "/user/lib.php");
 
 		// para trabalhar com as grades de notas precisa-se ter
@@ -84,12 +85,16 @@ class sistemaaula_grade_external extends external_api {
 
 		// OK, agora que está tudo ok, consulto no banco de dados a nota
 		// do usuário conforme o curso
-
-		$grades = grade_get_course_grade($params['userid'],$params['courseid']);
+			
+		$grade = grade_get_course_grade($params['userid'],$params['courseid']);
 		/*
-		 * $grades é um array de grade no formato:
+		 * $grade é um objeto com detalhes da nota dada ao usuário
+		* como neste caso informei apenas um curso retorna uma grade, se
+		* informar mais de um curso ou nenhum curso retorna um array com
+		* todas as notas disponiveis para o curso informado ou para os
+		* cursos matriculados respectivamente.
 		*
-		* $grade->grade			// Nota
+		* $grade->grade			// Nota, obrigatorio
 		* $grade->locked			//
 		* $grade->hidden			//
 		* $grade->overridden		//
@@ -108,17 +113,13 @@ class sistemaaula_grade_external extends external_api {
 		* $item->hidden
 		*
 		*/
+		// TODO, estudar melhorias neste retorno.
 		$result = array();
-		if($grades === false)
-			$result['grade'] = -9999;
-		else if($grades === null) 
-			$result['grade'] = -8888;
+		if($grade === false) $result['grade'] = grade_floatval(-9999);
+		else if($grade === null) $result['grade'] = grade_floatval(-8888);
 		// como informei apenas um curso nos parametros retorna apenas um grade, não retorna array.
-		else if(!isset($grades->grade))
-			$result['grade'] = -1;
-		else{
-			$result['grade'] = $grades->grade;
-		}
+		else $result['grade'] = grade_floatval($grade->grade);
+
 
 		return $result;
 	}
@@ -129,11 +130,7 @@ class sistemaaula_grade_external extends external_api {
 	 * @return external_description
 	 */
 	public static function get_final_grade_by_user_id_and_course_id_returns() {
-		return new external_single_structure(
-		array(
-                    'grade' => new external_value(PARAM_FLOAT,"A nota final do usuário" )
-		), 'Grade com detalhes da avaliação do usuário.'
-		);
+		return new SistemaAulaGradeReturn();
 	}
 
 }
