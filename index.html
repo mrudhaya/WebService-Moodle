@@ -1,3 +1,407 @@
-Em Construção
-<br />
-Aguarde!
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script type="text/javascript">
+	var _gaq = _gaq || [];
+	_gaq.push([ '_setAccount', 'UA-27427504-1' ]);
+	_gaq.push([ '_trackPageview' ]);
+
+	(function() {
+		var ga = document.createElement('script');
+		ga.type = 'text/javascript';
+		ga.async = true;
+		ga.src = ('https:' == document.location.protocol ? 'https://ssl'
+				: 'http://www')
+				+ '.google-analytics.com/ga.js';
+		var s = document.getElementsByTagName('script')[0];
+		s.parentNode.insertBefore(ga, s);
+	})();
+</script>
+<!-- favicon -->
+<script type="text/JavaScript">
+    var ua      = navigator.userAgent.toLowerCase();
+    var isOpera = ua.indexOf("opera") > -1;
+    var isChromeOrSafari = ua.indexOf("chrome") > -1 || ua.indexOf("safari") > -1;
+    var isIE    = !isOpera && ua.indexOf("msie") > -1;
+
+if (isIE ) {
+      document.write("<link href=\"favicon.ico\" "+
+                     "type='image/x-icon' rel='shortcut icon'/>");
+      document.write("<link href=\"favicon.ico\" "+
+                     "type='image/x-icon' rel='icon'/>");
+} else {
+      document.write("<link href=\"favicon.gif\" "+
+                     "type='image/gif' rel='shortcut icon'/>");
+      document.write("<link href=\"favicon.gif\" "+
+                     "type='image/gif' rel='icon'/>");
+}
+</script>
+<!-- fim favicon -->
+	<meta http-equiv="name" content="Projetos OpenSource - Web Service Moodle Sistema Aula" />
+	<meta http-equiv="description"
+		content='Novas Funções para o WebService do Moodle visando a integração 
+				com o Sistema Aula. Este projeto cria um novo Plugin do tipo
+				"local" para o Moodle que de forma automática instala e cria 
+				um novo serviço externo com as configurações necessárias para
+				o seu funcionamento. Estas funções também são criadas por 
+				encomenda de clientes e parceiros, objetivandoa demanda da 
+				integração com o Sistema Aula Desktop e SAWEE.' />
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+		<title>Projetos OpenSource - WebService Moodle Sistema Aula</title>
+		<link rel="stylesheet" href="/styles.css" type="text/css" />
+</head>
+
+<body>
+	<script type="text/javascript">
+		//Configure below to change URL path to the snow image
+		var snowsrc = "/images/snow03.gif"
+		// Configure below to change number of snow to render
+		var no = 10;
+		// Configure whether snow should disappear after x seconds (0=never):
+		var hidesnowtime = 0;
+		// Configure how much snow should drop down before fading ("windowheight" or "pageheight")
+		var snowdistance = "pageheight";
+
+		///////////Stop Config//////////////////////////////////
+
+		var ie4up = (document.all) ? 1 : 0;
+		var ns6up = (document.getElementById && !document.all) ? 1 : 0;
+
+		function iecompattest() {
+			return (document.compatMode && document.compatMode != "BackCompat") ? document.documentElement
+					: document.body
+		}
+
+		var dx, xp, yp; // coordinate and position variables
+		var am, stx, sty; // amplitude and step variables
+		var i, doc_width = 800, doc_height = 600;
+
+		if (ns6up) {
+			doc_width = self.innerWidth;
+			doc_height = self.innerHeight;
+		} else if (ie4up) {
+			doc_width = iecompattest().clientWidth;
+			doc_height = iecompattest().clientHeight;
+		}
+
+		dx = new Array();
+		xp = new Array();
+		yp = new Array();
+		am = new Array();
+		stx = new Array();
+		sty = new Array();
+		snowsrc = (snowsrc.indexOf("dynamicdrive.com") != -1) ? "snow.gif"
+				: snowsrc
+		for (i = 0; i < no; ++i) {
+			dx[i] = 0; // set coordinate variables
+			xp[i] = Math.random() * (doc_width - 50); // set position variables
+			yp[i] = Math.random() * doc_height;
+			am[i] = Math.random() * 20; // set amplitude variables
+			stx[i] = 0.02 + Math.random() / 10; // set step variables
+			sty[i] = 0.7 + Math.random(); // set step variables
+			if (ie4up || ns6up) {
+				if (i == 0) {
+					document
+							.write("<div id=\"dot"+ i +"\" style=\"POSITION: absolute; Z-INDEX: "+ i +"; VISIBILITY: visible; TOP: 15px; LEFT: 15px;\"><a href=\"http://dynamicdrive.com\"><img src='"+snowsrc+"' border=\"0\"><\/a><\/div>");
+				} else {
+					document
+							.write("<div id=\"dot"+ i +"\" style=\"POSITION: absolute; Z-INDEX: "+ i +"; VISIBILITY: visible; TOP: 15px; LEFT: 15px;\"><img src='"+snowsrc+"' border=\"0\"><\/div>");
+				}
+			}
+		}
+
+		function snowIE_NS6() { // IE and NS6 main animation function
+			doc_width = ns6up ? window.innerWidth - 10
+					: iecompattest().clientWidth - 10;
+			doc_height = (window.innerHeight && snowdistance == "windowheight") ? window.innerHeight
+					: (ie4up && snowdistance == "windowheight") ? iecompattest().clientHeight
+							: (ie4up && !window.opera && snowdistance == "pageheight") ? iecompattest().scrollHeight
+									: iecompattest().offsetHeight;
+			for (i = 0; i < no; ++i) { // iterate for every dot
+				yp[i] += sty[i];
+				if (yp[i] > doc_height - 50) {
+					xp[i] = Math.random() * (doc_width - am[i] - 30);
+					yp[i] = 0;
+					stx[i] = 0.02 + Math.random() / 10;
+					sty[i] = 0.7 + Math.random();
+				}
+				dx[i] += stx[i];
+				document.getElementById("dot" + i).style.top = yp[i] + "px";
+				document.getElementById("dot" + i).style.left = xp[i] + am[i]
+						* Math.sin(dx[i]) + "px";
+			}
+			snowtimer = setTimeout("snowIE_NS6()", 10);
+		}
+
+		function hidesnow() {
+			if (window.snowtimer)
+				clearTimeout(snowtimer)
+			for (i = 0; i < no; i++)
+				document.getElementById("dot" + i).style.visibility = "hidden"
+		}
+
+		if (ie4up || ns6up) {
+			snowIE_NS6();
+			if (hidesnowtime > 0)
+				setTimeout("hidesnow()", hidesnowtime * 1000)
+		}
+	</script>
+	<div class="wrapper">
+		<div id="container">
+			<div id="header">
+				<h1>
+					<a href="#">Sistema Aula </a>
+				</h1>
+				<h2>Projetos Open Source - WebSevice Moodle Sistema Aula</h2>
+
+			</div>
+			<div id="nav">
+				<ul>
+					<li><a href="/index.html">Início</a></li>
+					<li class="selected"><a href="#">Projetos</a></li>
+					<li><a href="#">Tutoriais</a></li>
+					<li><a href="/framework.html">Frameworks</a></li>
+					<li><a href="/contato.html">Contato</a></li>
+
+				</ul>
+			</div>
+			<div id="page-intro">
+				<h4>Nosso Objetivo</h4>
+				<p>Implementar Projetos Open Source (Código Aberto) que abram
+					ainda mais os horizontes das "Solução Informatizada" apresentadas
+					pelo Sistema Aula, integrando e ampliando seus "Objetivos",
+					estreitando e crescendo conhecimento nas soluções adotadas pelos
+					nossos clientes conectando-se aos sistemas externos e terceirizados
+					de forma mais transparente e escalável.</p>
+			</div>
+			<div id="body">
+				<div id="content">
+					<ul>
+						<center> <img src="/images/logo1.gif" alt="" width="250"
+							height="150" align="" /></center>
+
+
+					</ul>
+
+					<h1>WebService Moodle Sistema Aula</h1> 
+					&nbsp;
+					<p>Novas Funções para o WebService do Moodle visando a integração 
+					    com o Sistema Aula. Este projeto cria um novo Plugin do tipo
+					    "local" para o Moodle que de forma automática instala e cria 
+					    um novo serviço externo com as configurações necessárias para
+					    o seu funcionamento. Estas funções também são criadas por 
+					    encomenda de clientes e parceiros, objetivandoa demanda da 
+					    integração com o Sistema Aula Desktop e SAWEE.</p>
+
+					<h2>Como Colaborar com o projeto</h2>
+					&nbsp;
+					<p>Como o WebService do Sistema Aula é um produto OpenSource e 
+						distribuído conforme a licença GPL, você pode copia-lo e 
+						fazer suas alterações conforme sua necessidade, porem 
+						lembre-se de citar a fonte do código original.</p>
+
+					<p>Você também pode se juntar a nos, trazendo seu conhecimento 
+						e suas necessidades. o projeto é totalmente aberto a 
+						colaboração de terceiros, se você dá suporte a qualquer tipo 
+						de instituição de ensino que usa ou pretende usar o MOODLE, 
+						traga suas demandas e teremos o maior prazer em analisa-las 
+						para que possamos implementar tanto no WebService como no 
+						Sistema Aula.</p>
+
+					<p>Este WebService pode também vir a ser usado com outros 
+						aplicativos, se você está desenvolvendo seus Scripts de 
+						manutenção do MOODLE, traga sua demanda para conversarmos 
+						e vamos descobrir juntos uma forma de ampliar os serviços.</p>
+						
+					<h2>Instalação</h2>	
+					&nbsp;
+					<p>O processo de instalação do WebService do Sistema Aula é 
+					muito simples, antes de tudo assegure-se que seu MOODLE está 
+					bem instalado e totalmente configurado.</p>
+					
+					<p>Siga as instruções disponíveis no link: 
+					<a href="https://github.com/SistemaAula/WebService-Moodle/blob/master/README.md">https://github.com/SistemaAula/WebService-Moodle/blob/master/README.md</a></p>
+					<h3>Exemplos de consumo do WebService</h3>
+					<p>Preparamos alguns exemplos de consumo do WebService, 
+						veja detalhes no link:</p>
+					<p><a href="https://github.com/SistemaAula/WebService-Moodle/blob/master/cliente/README.md">https://github.com/SistemaAula/WebService-Moodle/blob/master/cliente/README.md</a></p>	
+				</div>
+
+				<div class="sidebar">
+					<ul>
+						<li>
+							<h4>O que você procura?</h4>
+							<ul>
+								<li>
+									<div id="cse" style="width: 100%;"></div> <script
+										src="//www.google.com/jsapi" type="text/javascript"></script>
+									<script type="text/javascript">
+										google.load('search', '1', {
+											language : 'pt-BR'
+										});
+
+										google
+												.setOnLoadCallback(
+														function() {
+															var customSearchControl = new google.search.CustomSearchControl(
+																	'010193287640926210602:uwki9ysoa10');
+
+															customSearchControl
+																	.setResultSetSize(google.search.Search.SMALL_RESULTSET);
+															customSearchControl
+																	.draw('cse');
+														}, true);
+									</script></li>
+							</ul></li>
+						<br />
+						<li>
+							<h4>Redes Sociais</h4>
+							<ul>
+								<li>
+									<!-- Place this tag where you want the +1 button to render -->
+									<p>
+										<g:plusone size="medium" annotation="inline"
+											href="http://sistemaaula.github.com/WebService-Moodle/"></g:plusone>
+										</br>
+										<!-- Place this render call where appropriate -->
+										<script type="text/javascript">
+											window.___gcfg = {
+												lang : 'pt-BR'
+											};
+											(function() {
+												var po = document
+														.createElement('script');
+												po.type = 'text/javascript';
+												po.async = true;
+												po.src = 'https://apis.google.com/js/plusone.js';
+												var s = document
+														.getElementsByTagName('script')[0];
+												s.parentNode
+														.insertBefore(po, s);
+											})();
+										</script>
+
+										<div id="fb-root"></div>
+										<script>
+											(function(d, s, id) {
+												var js, fjs = d
+														.getElementsByTagName(s)[0];
+												if (d.getElementById(id)) {
+													return;
+												}
+												js = d.createElement(s);
+												js.id = id;
+												js.src = "//connect.facebook.net/pt_BR/all.js#xfbml=1&appId=145245935566799";
+												fjs.parentNode.insertBefore(js,
+														fjs);
+											}(document, 'script',
+													'facebook-jssdk'));
+										</script>
+										<div class="fb-like" data-href="http://sistemaaula.github.com/WebService-Moodle/"
+											data-width="150" data-show-faces="true"></div>
+										</br>
+										<div class="fb-send" data-href="http://sistemaaula.github.com/WebService-Moodle/"
+											data-send="true" data-width="150" data-show-faces="true"></div>
+									</p>
+								</li>
+							</ul>
+						</li>
+						<br />
+						<li>
+							<h4>Sobre Sistema Aula</h4>
+							<ul>
+								<li>
+									<p style="margin: 0;">
+										O Sistema Aula é um Sistema Integrado de Administração de
+										instituições de Ensino, informatizando as atividades inerentes
+										ao seu funcionamento, além de facilitar, controlar e agilizar
+										os processos da instituição, o Sistema Aula permite a
+										consolidação de informações relevantes para a sua Gestão,
+										possibilitando a análise da evolução de dados como matrículas,
+										aproveitamento, freqüência e evasão escolar emitindo
+										relatórios como Diários, Atas, Históricos, entre outros. <br />
+											<img src="/images/logo1.gif" alt="" width="120" height="80"
+											align="right" /></br> Juntamente com os Módulos Administrativos
+										Financeiros (ERP) o Sistema Aula oferece a seus usuários todo
+										o potencial que a informática possibilita.</p>
+								</li>
+							</ul></li>
+						</br>
+						<div class="sidebar-end"></div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</div>
+		<div id="footer">
+			<div class="footer-content">
+				<div class="footer-box">
+					<h4>Projetos</h4>
+					<ul>
+						<li><a href="/com_joopoa">Componente Joopoa</a>
+						</li>
+						<li><a href="/com_joopoauser">Componente Joopoa User</a>
+						</li>
+						<li><a href="/mod_joopoalogin">Módulo Joopoa Login</a>
+						</li>
+						<li><a href="/plg_joopoalogin">Plugin Joopoa Login</a>
+						</li>
+						<li><a href="/SAWEE_ws_client/">SAWEE WS Cliente</a>
+						</li>
+					</ul>
+				</div>
+
+				<div class="footer-box">
+					<h4>Tutorial</h4>
+					<ul>
+						<li><a href="#" title=""></a>
+						</li>
+
+						<li><a href="#" title=""></a>
+						</li>
+
+						<li><a href="#" title=""></a>
+						</li>
+
+						<li><a href="#" title=""></a>
+						</li>
+
+						<li><a href="#" title=""></a>
+						</li>
+
+					</ul>
+				</div>
+
+				<div class="footer-box">
+
+					<h4>Ferramentas</h4>
+					<ul>
+						<li><a href="http://www.eclipse.org" target='_blank'
+							title="Eclipce">Eclipse</a>
+						</li>
+
+						<li><a href="https://github.com/" target='_blank'
+							title="Git Hub">Git Hub</a>
+						</li>
+
+						<li><a href="http://www.facebook.com.br" target='_blank'
+							title="Facebook">Facebook</a>
+						</li>
+
+
+					</ul>
+				</div>
+
+
+				<div class="clear"></div>
+			</div>
+			<div id="footer-links">
+				<!-- A link to http://www.spyka.net must remain. To remove link see http://www.spyka.net/licensing -->
+				<p>
+					&copy; Sistema Aula 2011. Design by <a href="http://www.spyka.net">Free
+						CSS Templates</a> - Adaptado por Juliana Queiroz
+				</p>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
