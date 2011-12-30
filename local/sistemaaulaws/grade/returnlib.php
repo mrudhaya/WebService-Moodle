@@ -32,19 +32,22 @@ class SistemaAulaGradeReturn extends external_single_structure{
 
 		parent::__construct(
 		array(
-				'grade' => new external_value(PARAM_FLOAT,"A nota final do usuário",VALUE_REQUIRED,-1)
+				'userId' => new external_value(PARAM_INT  ,"Id do Usuário no qual a grade pertence",VALUE_OPTIONAL),
+				'grade'  => new external_value(PARAM_FLOAT,"A nota final do usuário",VALUE_REQUIRED,-1)
 		), 'Grade com detalhes da avaliação ou nota final do usuário.'
 		);
 
 	}
 }
 class SistemaAulaGradesReturn extends external_multiple_structure{
-	function SistemaAula_Grades_Return() {
+	function SistemaAulaGradesReturn() {
 
-		parent::__construct(
-		new SistemaAula_Grade_Return(),
-		'Multiplas Grades com detalhes de cada avaliação ou notas finais conforme solicitação do usuário.'
-		);
+		parent::__construct(new external_single_structure(
+		array(
+				'userId' => new external_value(PARAM_INT  ,"Id do Usuário no qual a grade pertence",VALUE_REQUIRED),
+				'grade'  => new external_value(PARAM_FLOAT,"A nota final do usuário",VALUE_REQUIRED,-1)
+		), 'Grade com detalhes da avaliação ou nota final do usuário.'
+		));
 
 	}
 }
