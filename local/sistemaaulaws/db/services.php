@@ -27,3 +27,4 @@ $services = array(
         'enabled'=>1, //used only when installing the services
 	)
 );
+
