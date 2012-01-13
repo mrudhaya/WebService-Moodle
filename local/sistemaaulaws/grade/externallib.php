@@ -26,21 +26,21 @@
 
 require_once("$CFG->libdir/externallib.php");
 require("returnlib.php");
+require("parameterlib.php");
 
 class sistemaaula_grade_external extends external_api {
 
-
-
 	public static function get_final_grade_by_user_id_and_course_id_parameters() {
-		return new external_function_parameters(
-		array(
-              'userid'      => new external_value(PARAM_INT, 'Id do Usuário em formato Inteiro'),
-              'courseid'    => new external_value(PARAM_INT, 'ID do Curso em formato Inteiro')
-		)
-		);
+		return new SistemaAulaFinalGradeByUserIdAndCourseIdParameters();
 	}
 
-
+	/**
+	 * Returns description of method result value
+	 * @return external_description
+	 */
+	public static function get_final_grade_by_user_id_and_course_id_returns() {
+		return new SistemaAulaGradeReturn();
+	}
 
 	/**
 	 * Retorna a nota do aluno em um curso informado.
@@ -78,15 +78,15 @@ class sistemaaula_grade_external extends external_api {
 		// observe que solicitei os parametros como sendo do tipo inteiro
 		// diretamente sem que sejam algum tipo de estrutura. Isto facilita
 		// o acesso aos parametros,
-		$params = self::validate_parameters(
+		$funcParams = self::validate_parameters(
 		self::get_final_grade_by_user_id_and_course_id_parameters(), // função de validação
-		array('userid'=>$userid, 'courseid'=>$courseid) // array com os parametros
+		array('userId' =>$userid, 'courseId' =>$courseid) // array com os parametros
 		);
 
 		// OK, agora que está tudo ok, consulto no banco de dados a nota
 		// do usuário conforme o curso
 			
-		$grade = grade_get_course_grade($params['userid'],$params['courseid']);
+		$grade = grade_get_course_grade($funcParams['userId' ],$funcParams['courseId' ]);
 		/*
 		 * $grade é um objeto com detalhes da nota dada ao usuário
 		* como neste caso informei apenas um curso retorna uma grade, se
@@ -124,13 +124,85 @@ class sistemaaula_grade_external extends external_api {
 		return $result;
 	}
 
+	public static function get_final_grade_by_course_id_parameters(){
+		return new SistemaAulaFinalGradeByCourseIdParameters();
+	}
 
-	/**
-	 * Returns description of method result value
-	 * @return external_description
-	 */
-	public static function get_final_grade_by_user_id_and_course_id_returns() {
-		return new SistemaAulaGradeReturn();
+	public static function get_final_grade_by_course_id_returns(){
+		return new SistemaAulaGradesReturn();
+	}
+
+	public static function get_final_grade_by_course_id($courseId, $roleId){
+		// no MOODLE não temos factories
+		// obtemos os acessores diretamente via variaveis globais
+		global $CFG;
+
+		require_once($CFG->dirroot.'/grade/lib.php');
+		require_once($CFG->dirroot.'/grade/querylib.php');
+		require_once($CFG->dirroot.'/user/lib.php');
+
+		// para trabalhar com as grades de notas precisa-se ter
+		// as seguintes habilidades:
+		// * moodle/grade:export
+		// * gradeexprt/txt:view
+		// primeiro pego o contexto do sistema com base no usuário corrente
+		$context = get_context_instance(CONTEXT_SYSTEM);
+		// então verifico as abilidades uma a uma
+		require_capability('moodle/grade:export', $context);
+		require_capability('gradeexport/txt:view', $context);
+
+		// neste ponto se verifica os parametros informados estão corretos
+		// e dentro do exigido pela função
+		// observe que solicitei os parametros como sendo do tipo inteiro
+		// diretamente sem que sejam algum tipo de estrutura. Isto facilita
+		// o acesso aos parametros,
+		$funcParams = self::validate_parameters(
+		self::get_final_grade_by_course_id_parameters(), // função de validação
+		array(
+			'courseId'	=>$courseId,
+			'roleId'	=>$roleId
+		) // array com os parametros
+
+		);
+
+		if(MDEBUG)mDebug_log($funcParams, 'Parametros da Função');
+
+		$usersIds = array();
+ 
+		$context = get_context_instance(CONTEXT_COURSE,$funcParams['courseId']);
+
+		$role = new stdClass();
+		$role->id = $roleId;
+
+		$users = get_users_from_role_on_context($role, $context);
+		if(MDEBUG)mDebug_log($users);
+
+		$usersIds = array();
+		foreach ($users as $user) {
+			$usersIds[] = $user->userid;
+		}
+		if(MDEBUG)mDebug_log($usersIds, 'Ids dos Usuários');
+
+		// OK, agora que está tudo ok, consulto no banco de dados a nota
+		// do usuário conforme o curso
+		$grades = grade_get_course_grades($funcParams['courseId' ],$usersIds);
+		if(MDEBUG)mDebug_log($grades, 'Grades');
+
+		// TODO, estudar melhorias neste retorno.
+		foreach ($grades->grades as $userId => $grade) {
+			$result = array();
+
+			if($grade === false) $result['grade'] = grade_floatval(-9999);
+			else if($grade === null) $result['grade'] = grade_floatval(-8888);
+			// como informei apenas um curso nos parametros retorna apenas um grade, não retorna array.
+			else $result['grade'] = grade_floatval($grade->grade);
+
+			$result['userId'] = $userId;
+			$results[] = $result;
+		}
+		
+		if(MDEBUG)mDebug_log($results, 'Grades finais a serem enviadas');
+		return  $results;
 	}
 
 }

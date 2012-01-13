@@ -118,4 +118,3 @@ Você já deverá ter o serviço configurado e um token criado.
 ## Consumindo as funções para obtenção de notas
 
 Veja detalhes no Link: https://github.com/SistemaAula/WebService-Moodle/blob/master/cliente/README.md
-
