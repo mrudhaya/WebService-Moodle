@@ -24,3 +24,9 @@
  */
 
 $string['pluginname'] = 'Sistema Aula WebService';
+$string['username_already_exists'] = '[username_already_exists] - Username already exists: {$a}';
+$string['property_is_too_long'] = '[property_is_too_long] - Property: {$a->key}  is too long: {$a->value}'; 
+$string['invalid_authentication_type'] = '[invalid_authentication_type] - Invalid Authentication Type: {$a}';
+$string['invalid_language_code'] = '[invalid_language_code] - Invalid Language Code: {$a}';
+$string['invalid_theme' ] = '[invalid_theme] - Invalid Theme: {$a}';
+
