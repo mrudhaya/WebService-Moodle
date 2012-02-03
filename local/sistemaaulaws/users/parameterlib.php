@@ -9,6 +9,7 @@ require_once("$CFG->libdir/externallib.php");
 class  SistemaAulaUsersParameters extends external_function_parameters{
 
 	public function SistemaAulaUsersParameters(){
+		GLOBAL $CFG;
 		parent::__construct(array(
                 'users' => new external_multiple_structure(
 		new external_single_structure(array(

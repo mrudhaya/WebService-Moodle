@@ -1,4 +1,7 @@
 <?php
+
+require_once("$CFG->libdir/externallib.php");
+
 class SistemaAulaFinalGradeByCourseIdParameters extends external_function_parameters{
 
 	function SistemaAulaFinalGradeByCourseIdParameters() {

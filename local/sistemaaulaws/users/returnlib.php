@@ -1,5 +1,7 @@
 <?php
 
+require_once("$CFG->libdir/externallib.php");
+
 class SistemaAulaUsersReturns extends external_multiple_structure{
 
 	function SistemaAulaUsersReturns() {

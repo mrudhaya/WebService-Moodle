@@ -1,4 +1,7 @@
 <?php
+
+require_once("$CFG->libdir/externallib.php");
+
 /**
  * Objeto usado para retorno da grade de nota final ou atvidade.
  * Pode ser usado para retornar a nota final calculada ou de uma unica atividade
