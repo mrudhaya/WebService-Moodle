@@ -20,7 +20,7 @@ $functions = array(
 	'sistemaaula_user_create_users' => array(
 		'classname'		=> 'sistemaaula_user_external', 
         'methodname'	=> 'create_users',
-        'classpath'		=> 'local/sistemaaulaws/user/externallib.php', 
+        'classpath'		=> 'local/sistemaaulaws/users/externallib.php', 
         'description'	=> 'Classe identica á moodle_user_create_users, porem as execptions foram mudadas para dar um retorno mais claro. Esta classe cria um ou mais usuários no MOODLE',
         'capabilities'	=> 'moodle/user:create',
         'type'			=> 'write'
@@ -34,5 +34,20 @@ $services = array(
         'requiredcapability' => '',                  
         'restrictedusers' => 1,
         'enabled'=>1, //used only when installing the services
-	)
+	),
+    'Sistema Aula - Geral' => array(
+        'functions' => array (
+        	'sistemaaula_grade_get_final_grade_by_user_id_and_course_id',
+        	'sistemaaula_grade_get_final_grade_by_course_id',
+        	'sistemaaula_user_create_users', 
+        	'moodle_enrol_get_enrolled_users',
+        	'moodle_enrol_manual_enrol_users',
+        	'moodle_course_create_courses',
+        	'moodle_course_get_courses'
+        ), //web service function name
+        'requiredcapability' => '',                  
+        'restrictedusers' => 1,
+        'enabled'=>1, //used only when installing the services
+),
+	
 );
